@@ -1,2 +1,6 @@
 test for git function
 lalala
+<<<<<<< HEAD
+=======
+123
+>>>>>>> 92f1028797079a9c2e00617f6abec8cfe9acda93
