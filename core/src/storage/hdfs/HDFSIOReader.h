@@ -34,6 +34,8 @@ class HDFSIOReader : public IOReader{
         int64_t
         length() override;
 
+        void
+        close() override;
         
 
 public:
@@ -42,7 +44,7 @@ public:
     hdfsFS hdfs_fs;
     hdfsFile hdfs_file;
 
-}
+};
 
     }
 }
