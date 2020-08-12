@@ -41,8 +41,8 @@ class HDFSIOReader : public IOReader{
 public:
     std::string name_;
     // std::string buffer_; //why there is a buffer in S3 ???
-    hdfsFS hdfs_fs;
-    hdfsFile hdfs_file;
+    hdfsFS hdfs_fs_;
+    hdfsFile hdfs_file_;
 
 };
 

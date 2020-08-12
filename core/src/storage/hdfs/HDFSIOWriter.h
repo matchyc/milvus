@@ -47,8 +47,8 @@ public:
 public:
     int64_t len_;
     std::string name_;
-    hdfsFS hdfs_fs;
-    hdfsFile hdfs_file;
+    hdfsFS hdfs_fs_;
+    hdfsFile hdfs_file_;
 };
 
 }//storage

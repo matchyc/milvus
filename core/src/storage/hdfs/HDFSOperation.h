@@ -30,7 +30,7 @@ class  HDFSOperation : public Operation {
             DeleteFile(const std::string& file_path);
     public:
             const std::string dir_path_;
-            hdfsFS hdfs_fs;
+            hdfsFS hdfs_fs_;
 };
 
 }

@@ -19,18 +19,18 @@ HDFSIOWriter::open(const std::string& name){
         name_ = name;
         len_ = 0;
 
-        hdfs_fs = hdfsConnect("default",0);
+        hdfs_fs_ = hdfsConnect("default",0);
 
-        if(hdfs_fs == nullptr)
+        if(hdfs_fs_ == nullptr)
             return false;
         //open file with append mode.
-        hdfs_file = hdfsOpenFile(hdfs_fs, name_.c_str(), O_WRONLY | O_APPEND, 0, 0, 0);
+        hdfs_file_ = hdfsOpenFile(hdfs_fs_, name_.c_str(), O_WRONLY | O_APPEND, 0, 0, 0);
         return true;
 }
 
 void
 HDFSIOWriter::write(void *ptr, int64_t size){
-        tSize nums_write_bytes = hdfsWrite(hdfs_fs, hdfs_file, reinterpret_cast<char*>(ptr), static_cast<tSize>(size));
+        tSize nums_write_bytes = hdfsWrite(hdfs_fs_, hdfs_file_, reinterpret_cast<char*>(ptr), static_cast<tSize>(size));
         len_ += size;
 }
 
@@ -41,9 +41,9 @@ HDFSIOWriter::length(){
 
 void
 HDFSIOWriter::close(){
-    int flag = hdfsCloseFile(hdfs_fs, hdfs_file);
+    int flag = hdfsCloseFile(hdfs_fs_, hdfs_file_);
     //disconnect
-    int status = hdfsDisconnect(hdfs_fs);
+    int status = hdfsDisconnect(hdfs_fs_);
 }
 
 }
