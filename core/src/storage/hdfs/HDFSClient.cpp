@@ -8,7 +8,7 @@ namespace storage{
 HDFSClient::HDFSClient() {
     //read file from ***.xml to get the setting. then connect
     bld_ = hdfsNewBuilder();
-    hdfsBuilderSetNameNode(bld_, namdenode_addr);
+    hdfsBuilderSetNameNode(bld_, "default");//no need to specify
     hdfs_fs_ = hdfsBuilderConnect(bld_);
 }
 
