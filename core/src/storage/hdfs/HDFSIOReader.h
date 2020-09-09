@@ -2,6 +2,7 @@
 
 #include "storage/hdfs/hdfs.h"
 #include "storage/IOReader.h"
+#include "HDFSClient.h"
 #include <memory>
 #include <string>
 

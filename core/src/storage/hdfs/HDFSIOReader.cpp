@@ -2,7 +2,7 @@
 
 
 #include "storage/hdfs/HDFSIOReader.h"
-//#include "HDFSClient.h"
+#include "HDFSClient.h"
 
 namespace milvus{
 namespace storage{
@@ -10,13 +10,14 @@ namespace storage{
 bool
 HDFSIOReader::open(const std::string & name){
     name_ = name;
+    //without Singleton
+    /*
     hdfs_fs_ = hdfsConnect("default",0);
-
     if(hdfs_fs_ == nullptr)
         return false;
-
     hdfs_file_ = hdfsOpenFile(hdfs_fs_, name_.c_str(), O_RDONLY, 0, 0, 0);
-    return true;
+    */
+    return HDFSClient::getInstance().open(name.c_str()).ok();
 }
 
 void

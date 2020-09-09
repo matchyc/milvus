@@ -1,31 +1,50 @@
-// Copyright (C) 2019-2020 Zilliz. All rights reserved.
-//
-// Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
-// with the License. You may obtain a copy of the License at
-//
-// http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software distributed under the License
-// is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
-// or implied. See the License for the specific language governing permissions and limitations under the License.
-
 #pragma once
 
 #include "hdfs.h"
+#include "utils/Status.h"
+//now the addr is a default one
+//todo: make everyone can connect to their own cluster
+const char* namdenode_addr = "hdfs://localhost:9000";
 
 namespace milvus{
 namespace storage{
 
-//didn't use
+//try to use singleton in 9/9/2020
 class HDFSClient{
-    public:
-            static bool
-            ConnectToHdfs();
+public:
+        static HDFSClient& 
+        getInstance(){
+                static HDFSClient instance;
+                return instance;
+        }
 
-            static bool
-            DisconnectFromHdfs();
-    public:
-           static hdfsFS hdfs_fs;
+        ~HDFSClient() = default;
+        HDFSClient(const HDFSClient&)  = delete;
+        HDFSClient(HDFSClient&&) = delete;
+        HDFSClient& 
+        operator = (const HDFSClient&) = delete;
+        HDFSClient&
+        operator = (HDFSClient&&) = delete;
+
+        Status
+        open(const char* name);
+
+        void
+        read(char* ptr, int64_t size);
+
+        void
+        seekg(int64_t pos);
+
+        int64_t
+        length(std::string name);
+
+        void
+        close();
+private:
+        HDFSClient() ;
+        struct hdfsBuilder * bld_;
+         hdfsFS hdfs_fs_;
+         hdfsFile hdfs_file_;
 };
 
 }
