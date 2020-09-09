@@ -2,6 +2,8 @@
 
 #include "hdfs.h"
 #include "utils/Status.h"
+
+#include <vector>
 //now the addr is a default one
 //todo: make everyone can connect to their own cluster
 const char* namdenode_addr = "hdfs://localhost:9000";
@@ -29,6 +31,12 @@ public:
         Status
         open(const char* name);
 
+        Status
+        write_open(const char* name);
+
+        void
+        write(char* ptr, int64_t size);
+
         void
         read(char* ptr, int64_t size);
 
@@ -40,6 +48,15 @@ public:
 
         void
         close();
+
+        void
+        CreateDirectory(char* path);
+
+        void
+        ListDirectory(std::vector<std::string>& file_paths, std::string dir_path);
+
+        bool
+        DeleteFile(const std::string& file_path);
 private:
         HDFSClient() ;
         struct hdfsBuilder * bld_;

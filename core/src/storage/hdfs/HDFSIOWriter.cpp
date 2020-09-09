@@ -10,7 +10,7 @@
 // or implied. See the License for the specific language governing permissions and limitations under the License.
 
 #include "HDFSIOWriter.h"
-
+#include "HDFSClient.h"
 namespace milvus{
 namespace storage{
 
@@ -19,18 +19,23 @@ HDFSIOWriter::open(const std::string& name){
         name_ = name;
         len_ = 0;
 
-        hdfs_fs_ = hdfsConnect("default",0);
+        // hdfs_fs_ = hdfsConnect("default",0);
 
-        if(hdfs_fs_ == nullptr)
-            return false;
-        //open file with append mode.
-        hdfs_file_ = hdfsOpenFile(hdfs_fs_, name_.c_str(), O_WRONLY | O_APPEND, 0, 0, 0);
-        return true;
+        // if(hdfs_fs_ == nullptr)
+        //     return false;
+        // //open file with append mode.
+        // hdfs_file_ = hdfsOpenFile(hdfs_fs_, name_.c_str(), O_WRONLY | O_APPEND, 0, 0, 0);
+        // return true;
+
+    return  HDFSClient::getInstance().write_open(name.c_str()).ok();
 }
 
 void
 HDFSIOWriter::write(void *ptr, int64_t size){
-        tSize nums_write_bytes = hdfsWrite(hdfs_fs_, hdfs_file_, reinterpret_cast<char*>(ptr), static_cast<tSize>(size));
+        // tSize nums_write_bytes = hdfsWrite(hdfs_fs_, hdfs_file_, reinterpret_cast<char*>(ptr), static_cast<tSize>(size));
+
+        
+        HDFSClient::getInstance().write(reinterpret_cast<char*>(ptr), size);
         len_ += size;
 }
 
@@ -41,9 +46,11 @@ HDFSIOWriter::length(){
 
 void
 HDFSIOWriter::close(){
-    int flag = hdfsCloseFile(hdfs_fs_, hdfs_file_);
-    //disconnect
-    int status = hdfsDisconnect(hdfs_fs_);
+    // int flag = hdfsCloseFile(hdfs_fs_, hdfs_file_);
+    // //disconnect
+    // int status = hdfsDisconnect(hdfs_fs_);
+    
+    HDFSClient::getInstance().close();
 }
 
 }
