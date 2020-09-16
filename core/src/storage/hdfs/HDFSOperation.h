@@ -1,37 +1,36 @@
-//License...?
 
 #pragma once
 
 #include "hdfs.h"
 #include "storage/Operation.h"
 
+#include <memory>
 #include <string>
 #include <vector>
-#include <memory>
 
-namespace milvus{
-namespace storage{
+namespace milvus {
+namespace storage {
 
-class  HDFSOperation : public Operation {
-    public:
-            //constructor
-            explicit HDFSOperation(const std::string& dir_path);
+class HDFSOperation : public Operation {
+ public:
+    // constructor
+    explicit HDFSOperation(const std::string& dir_path);
 
-            void
-            CreateDirectory();
+    void
+    CreateDirectory();
 
-            const std::string&
-            GetDirectory();
+    const std::string&
+    GetDirectory();
 
-            void
-            ListDirectory(std::vector<std::string>& file_paths);
+    void
+    ListDirectory(std::vector<std::string>& file_paths);
 
-            bool
-            DeleteFile(const std::string& file_path);
-    public:
-            const std::string dir_path_;
-            hdfsFS hdfs_fs_;
+    bool
+    DeleteFile(const std::string& file_path);
+
+ public:
+    const std::string dir_path_;
 };
-
-}
-}
+using HDFSOperationPtr = std::shared_ptr<HDFSOperation>;
+}  // namespace storage
+}  // namespace milvus

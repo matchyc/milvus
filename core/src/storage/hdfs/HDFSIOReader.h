@@ -11,7 +11,6 @@ namespace milvus{
 
 class HDFSIOReader : public IOReader{
     public:
-        // same as disk
         HDFSIOReader() = default;
         ~HDFSIOReader() = default;
         HDFSIOReader(const HDFSIOReader&) = delete;
@@ -41,12 +40,10 @@ class HDFSIOReader : public IOReader{
 
 public:
     std::string name_;
-    // std::string buffer_; //why there is a buffer in S3 ???
-    hdfsFS hdfs_fs_;
-    hdfsFile hdfs_file_;
-
 };
 
-    }
+using HDFSIOReaderPtr = std::shared_ptr<HDFSIOReader>;
+
+}
 }
 
