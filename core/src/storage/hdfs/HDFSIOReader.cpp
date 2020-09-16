@@ -1,6 +1,4 @@
-// License...
-
-#include "storage/hdfs/HDFSIOReader"
+#include "storage/hdfs/HDFSIOReader.h"
 #include "HDFSClient.h"
 
 namespace milvus {

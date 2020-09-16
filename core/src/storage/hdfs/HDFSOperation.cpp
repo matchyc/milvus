@@ -1,5 +1,3 @@
-
-
 #include "HDFSOperation.h"
 #include "HDFSClient.h"
 
